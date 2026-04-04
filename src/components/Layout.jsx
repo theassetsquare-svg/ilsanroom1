@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const navItems = [
@@ -9,6 +10,26 @@ const navItems = [
 
 export default function Layout({ children }) {
   const { pathname } = useLocation()
+
+  useEffect(() => {
+    const key = `scrollPos_${pathname}`
+    const saved = sessionStorage.getItem(key)
+    if (saved) {
+      window.scrollTo(0, parseInt(saved, 10))
+    } else {
+      window.scrollTo(0, 0)
+    }
+
+    const handleScroll = () => {
+      sessionStorage.setItem(key, String(window.scrollY))
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    const visits = parseInt(sessionStorage.getItem('visitCount') || '0', 10) + 1
+    sessionStorage.setItem('visitCount', String(visits))
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [pathname])
 
   return (
     <>
