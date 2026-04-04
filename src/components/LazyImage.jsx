@@ -30,6 +30,8 @@ export default function LazyImage({ src, alt, caption }) {
           alt={alt}
           loading="lazy"
           decoding="async"
+          width="800"
+          height="500"
           onLoad={() => setLoaded(true)}
           style={{ opacity: loaded ? 1 : 0 }}
         />
