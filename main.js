@@ -44,7 +44,7 @@ document.querySelectorAll('.secret').forEach(el=>{
     if(!q){results.classList.remove('open');results.innerHTML='';return;}
     const found=pages.filter(p=>p.title.includes(q)||p.kw.includes(q));
     if(found.length){
-      results.innerHTML=found.map(p=>'<li><a href="'+p.url+'">'+p.title+'</a></li>').join('');
+      results.innerHTML=found.map(p=>'<li><a href="'+p.url+'" target="_blank" rel="noopener noreferrer">'+p.title+'</a></li>').join('');
       results.classList.add('open');
     }else{
       results.innerHTML='<li style="padding:12px 16px;color:var(--text2);text-align:center">검색 결과가 없습니다</li>';
