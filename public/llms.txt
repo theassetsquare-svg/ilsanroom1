@@ -1,0 +1,17 @@
+# 일산룸 가이드
+
+> 일산룸 예약, 가격, 후기 정보를 제공하는 정보 사이트입니다.
+
+이 사이트는 경기도 고양시 일산 지역의 룸 문화에 대한 실전 가이드를 제공합니다.
+현지 경험자가 직접 방문하고 정리한 정보를 기반으로, 처음 방문하는 사람도 실패 없이 이용할 수 있도록 돕습니다.
+
+## 주요 콘텐츠
+
+- [일산룸 — 예약 전에 반드시 읽어야 할 글](https://ilsanroom1.pages.dev/)
+- [일산룸 초보자 완벽 가이드](https://ilsanroom1.pages.dev/guide)
+- [일산룸 지역별 솔직 후기](https://ilsanroom1.pages.dev/review)
+- [일산룸 가격 비교 총정리](https://ilsanroom1.pages.dev/price)
+
+## 정보 제공자
+
+놀쿨 (NOLCOOL) — https://nolcool.com
