@@ -82,6 +82,37 @@ document.querySelectorAll('.secret').forEach(el=>{
   render();
 })();
 
+// === GALLERY (day vs night swipe) ===
+(function(){
+  const g=document.getElementById('gallery');
+  if(!g)return;
+  const slides=[
+    {day:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format',night:'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=600&q=80&auto=format',cap:'라페스타 거리 — 낮에는 평범한 상가, 밤에는 일산 최고의 번화가로 변한다'},
+    {day:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format',night:'https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&q=80&auto=format',cap:'웨스턴돔 업소 — 일반 사무 공간과 프리미엄 라운지, 같은 건물 다른 세계'},
+    {day:'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80&auto=format',night:'https://images.unsplash.com/photo-1519690889869-e705e59f72e1?w=600&q=80&auto=format',cap:'장항동 인근 — 한적한 카페 골목이 밤에는 숨겨진 프라이빗 명소가 된다'},
+    {day:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format',night:'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600&q=80&auto=format',cap:'기본 세팅 — 점심엔 레스토랑, 저녁엔 분위기 있는 바로 완전히 달라진다'},
+    {day:'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80&auto=format',night:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80&auto=format',cap:'룸 조명 — 낮 자연광과 밤 무드등, 같은 공간이 완전히 다른 경험을 만든다'},
+    {day:'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80&auto=format',night:'https://images.unsplash.com/photo-1560624052-449f5ddf0c31?w=600&q=80&auto=format',cap:'음료 세팅 — 낮 커피 한 잔 가격이면 밤에는 프리미엄 세팅을 받을 수 있다'}
+  ];
+  let idx=0,mode='night';
+  const img=g.querySelector('.gallery-img'),cap=g.querySelector('.gallery-cap'),label=g.querySelector('.gallery-label'),dots=g.querySelector('.gallery-dots');
+  const btnDay=g.querySelector('[data-mode="day"]'),btnNight=g.querySelector('[data-mode="night"]');
+  function render(){
+    const s=slides[idx];img.src=mode==='day'?s.day:s.night;cap.textContent=s.cap;label.textContent=mode==='day'?'낮':'밤';
+    dots.innerHTML=slides.map((_,i)=>'<span class="gallery-dot'+(i===idx?' active':'')+'" data-i="'+i+'"></span>').join('');
+    dots.querySelectorAll('.gallery-dot').forEach(d=>d.addEventListener('click',()=>{idx=+d.dataset.i;render();}));
+    btnDay.classList.toggle('active',mode==='day');btnNight.classList.toggle('active',mode==='night');
+  }
+  btnDay.addEventListener('click',()=>{mode='day';render();});
+  btnNight.addEventListener('click',()=>{mode='night';render();});
+  g.querySelector('.gallery-prev').addEventListener('click',()=>{idx=idx>0?idx-1:slides.length-1;render();});
+  g.querySelector('.gallery-next').addEventListener('click',()=>{idx=idx<slides.length-1?idx+1:0;render();});
+  let sx=0;const vp=g.querySelector('.gallery-vp');
+  vp.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+  vp.addEventListener('touchend',e=>{const d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>50){idx=d>0?(idx<slides.length-1?idx+1:0):(idx>0?idx-1:slides.length-1);render();}},{passive:true});
+  render();
+})();
+
 // === LAZY IMAGES ===
 if('IntersectionObserver' in window){
   const obs=new IntersectionObserver((entries)=>{
