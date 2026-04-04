@@ -8,6 +8,10 @@ import InsiderTip from '../components/InsiderTip.jsx'
 import ReviewHighlight from '../components/ReviewHighlight.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import SecretReveal from '../components/SecretReveal.jsx'
+import Countdown from '../components/Countdown.jsx'
+import MiniQuiz from '../components/MiniQuiz.jsx'
+import ExitIntent from '../components/ExitIntent.jsx'
+import Gallery from '../components/Gallery.jsx'
 
 const MAIN_SITE = 'https://nolcool.com'
 
@@ -34,6 +38,8 @@ export default function Review() {
         <link rel="canonical" href="https://ilsanroom1.pages.dev/review" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
+
+      <Countdown />
 
       <HeroSection
         title="일산룸 지역별 솔직 후기"
@@ -146,6 +152,8 @@ export default function Review() {
           </a>
         </div>
 
+        <Gallery />
+
         <h2>세 곳 요약 비교</h2>
 
         <div className="comparison-table">
@@ -211,6 +219,8 @@ export default function Review() {
           </p>
         </SecretReveal>
 
+        <MiniQuiz />
+
         <nav className="internal-nav">
           <h3>다른 글 보기</h3>
           <ul>
@@ -228,6 +238,7 @@ export default function Review() {
       </article>
 
       <ScrollCTA />
+      <ExitIntent />
     </Layout>
   )
 }

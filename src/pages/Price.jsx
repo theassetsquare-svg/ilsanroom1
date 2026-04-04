@@ -8,6 +8,8 @@ import InsiderTip from '../components/InsiderTip.jsx'
 import ReviewHighlight from '../components/ReviewHighlight.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import SecretReveal from '../components/SecretReveal.jsx'
+import Countdown from '../components/Countdown.jsx'
+import ExitIntent from '../components/ExitIntent.jsx'
 
 const MAIN_SITE = 'https://nolcool.com'
 
@@ -34,6 +36,8 @@ export default function Price() {
         <link rel="canonical" href="https://ilsanroom1.pages.dev/price" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
+
+      <Countdown />
 
       <HeroSection
         title="일산룸 가격 비교 총정리"
@@ -214,6 +218,7 @@ export default function Price() {
       </article>
 
       <ScrollCTA />
+      <ExitIntent />
     </Layout>
   )
 }

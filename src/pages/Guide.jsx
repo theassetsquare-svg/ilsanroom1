@@ -8,6 +8,8 @@ import InsiderTip from '../components/InsiderTip.jsx'
 import ReviewHighlight from '../components/ReviewHighlight.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import SecretReveal from '../components/SecretReveal.jsx'
+import Countdown from '../components/Countdown.jsx'
+import ExitIntent from '../components/ExitIntent.jsx'
 
 const MAIN_SITE = 'https://nolcool.com'
 
@@ -34,6 +36,8 @@ export default function Guide() {
         <link rel="canonical" href="https://ilsanroom1.pages.dev/guide" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
+
+      <Countdown />
 
       <HeroSection
         title="일산룸 초보자 완벽 가이드"
@@ -174,6 +178,7 @@ export default function Guide() {
       </article>
 
       <ScrollCTA />
+      <ExitIntent />
     </Layout>
   )
 }

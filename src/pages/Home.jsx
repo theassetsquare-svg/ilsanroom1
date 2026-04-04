@@ -8,6 +8,10 @@ import InsiderTip from '../components/InsiderTip.jsx'
 import ReviewHighlight from '../components/ReviewHighlight.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import SecretReveal from '../components/SecretReveal.jsx'
+import Countdown from '../components/Countdown.jsx'
+import MiniQuiz from '../components/MiniQuiz.jsx'
+import ExitIntent from '../components/ExitIntent.jsx'
+import Gallery from '../components/Gallery.jsx'
 
 const MAIN_SITE = 'https://nolcool.com'
 
@@ -39,6 +43,8 @@ export default function Home() {
         <link rel="canonical" href="https://ilsanroom1.pages.dev/" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
+
+      <Countdown />
 
       <HeroSection
         title="일산룸 — 예약 전에 반드시 읽어야 할 글"
@@ -95,6 +101,8 @@ export default function Home() {
         <p>
           세 번째는 장항동 외곽 지역이다. 이쪽은 상대적으로 조용하고 프라이버시가 보장되는 곳이 많다. 단골 위주로 운영하는 업소가 많아서 처음 가면 약간 문턱이 높게 느껴질 수 있지만, 한 번 자리를 잡으면 서비스 면에서 만족도가 높다는 평이 지배적이다.
         </p>
+
+        <Gallery />
 
         <h2>처음 가는 사람이 실수하는 3가지</h2>
 
@@ -232,6 +240,8 @@ export default function Home() {
           일산룸은 아무 생각 없이 가면 평범한 경험에 그치지만, 최소한의 사전 조사와 예약만 하면 만족도가 확 올라가는 곳이다. 이 글에서 정리한 지역별 특성, 예약 팁, 가격 구조를 기억해두면 첫 방문이라도 실패할 확률이 현저히 낮아진다. 일산 밤문화의 핵심은 결국 정보의 차이다.
         </p>
 
+        <MiniQuiz />
+
         <nav className="internal-nav">
           <h3>더 읽어보기</h3>
           <ul>
@@ -249,6 +259,7 @@ export default function Home() {
       </article>
 
       <ScrollCTA />
+      <ExitIntent />
     </Layout>
   )
 }
