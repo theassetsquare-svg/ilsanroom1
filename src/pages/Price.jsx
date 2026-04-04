@@ -11,16 +11,20 @@ import SecretReveal from '../components/SecretReveal.jsx'
 import Countdown from '../components/Countdown.jsx'
 import ExitIntent from '../components/ExitIntent.jsx'
 
-const MAIN_SITE = 'https://nolcool.com'
+const MAIN_SITE = 'https://ilsanroom.pages.dev/'
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'NightClub',
   name: '일산룸 가격 비교 총정리 — 숨겨진 추가 요금까지 공개',
   description: '일산룸 실제 이용 가격을 항목별로 분해해서 정리했다. 기본 세팅비, 음료비, 추가 요금 구조까지 현장 경험 기반 비교 분석.',
-  author: { '@type': 'Person', name: '일산 밤문화 에디터' },
-  datePublished: '2026-03-28',
-  dateModified: '2026-04-04'
+  url: MAIN_SITE,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '고양시 일산',
+    addressRegion: '경기도',
+    addressCountry: 'KR'
+  }
 }
 
 export default function Price() {
@@ -76,7 +80,7 @@ export default function Price() {
           "같은 20만 원이라도 어디에 쓰느냐에 따라 경험의 질이 달라진다"
         </blockquote>
 
-        <h2>지역별 실제 가격 비교</h2>
+        <h2>일산룸 지역별 실제 가격 비교</h2>
 
         <div className="comparison-table">
           <table>
@@ -127,7 +131,7 @@ export default function Price() {
           위 표의 가격은 직접 방문하며 수집한 데이터 기반 평균치다. 같은 지역 내에서도 업소마다 5~10만 원씩 차이가 난다. 최소 3곳은 비교 전화해봐라.
         </InsiderTip>
 
-        <h2>숨겨진 추가 요금 — 이것 때문에 예상보다 많이 나온다</h2>
+        <h2>일산룸 숨겨진 추가 요금 — 예상보다 많이 나오는 이유</h2>
 
         <LazyImage
           src="https://images.unsplash.com/photo-1566417713940-fe7c7c98a8eb?w=800&q=80&auto=format"
@@ -159,7 +163,7 @@ export default function Price() {
           </a>
         </div>
 
-        <h2>가성비를 높이는 실전 팁 5가지</h2>
+        <h2>일산룸 가성비를 높이는 실전 팁 5가지</h2>
 
         <p>
           첫째, 주중에 가라. 금토 대비 가격이 10~20% 낮은 곳이 많고, 예약도 쉽다. 둘째, 기본 세팅에 양주가 포함된 곳을 선택하라. 양주를 별도로 주문하면 가격이 크게 올라간다. 셋째, 인원수에 딱 맞는 룸을 잡아라. 큰 룸을 잡으면 룸 사용료가 올라간다.

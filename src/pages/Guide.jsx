@@ -11,16 +11,20 @@ import SecretReveal from '../components/SecretReveal.jsx'
 import Countdown from '../components/Countdown.jsx'
 import ExitIntent from '../components/ExitIntent.jsx'
 
-const MAIN_SITE = 'https://nolcool.com'
+const MAIN_SITE = 'https://ilsanroom.pages.dev/'
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'NightClub',
   name: '일산룸 초보자 완벽 가이드 — 첫 방문 전 필수 체크리스트',
   description: '일산룸 처음이라면 이 글부터 읽어라. 예약 방법, 매너, 복장, 주의사항까지 경험자가 직접 정리한 초보자 전용 안내서.',
-  author: { '@type': 'Person', name: '일산 밤문화 에디터' },
-  datePublished: '2026-03-20',
-  dateModified: '2026-04-04'
+  url: MAIN_SITE,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '고양시 일산',
+    addressRegion: '경기도',
+    addressCountry: 'KR'
+  }
 }
 
 export default function Guide() {
@@ -51,7 +55,7 @@ export default function Guide() {
           솔직히 말한다. 일산룸 처음 가는 사람 중 절반은 뭘 해야 할지 몰라서 어색하게 앉아만 있다가 나온다. 그 시간과 돈이 아깝지 않은가. 이 글을 끝까지 읽으면 적어도 그런 실수는 하지 않는다.
         </p>
 
-        <h2>출발 전 — 예약은 선택이 아니라 필수다</h2>
+        <h2>일산룸 출발 전 — 예약은 선택이 아니라 필수다</h2>
 
         <BeforeAfter
           before="'대충 4명이요'라고 전화. 남는 자리에 배정. 룸 크기 안 맞고 분위기 어색."
@@ -92,7 +96,7 @@ export default function Guide() {
           "첫인상은 문을 열고 3초 안에 결정된다. 복장이 곧 태도다"
         </blockquote>
 
-        <h2>입장 후 — 처음 30분이 전체 분위기를 결정한다</h2>
+        <h2>일산룸 입장 후 — 처음 30분이 분위기를 결정한다</h2>
 
         <p>
           룸에 들어가면 긴장하는 사람이 많다. 하지만 자연스럽게 행동하면 된다. 자리에 앉으면 먼저 음료를 주문하고, 가볍게 대화를 시작하라. 과하게 텐션을 올릴 필요도, 지나치게 조용할 필요도 없다. 적당한 대화와 웃음이 오가면 분위기는 자연스럽게 만들어진다.
@@ -114,7 +118,7 @@ export default function Guide() {
           </a>
         </div>
 
-        <h2>매너 — 이것만 지키면 어디서든 환영받는다</h2>
+        <h2>일산룸 매너 — 이것만 지키면 환영받는다</h2>
 
         <p>
           첫째, 직원에게 반말하지 마라. 존댓말은 기본이다. 둘째, 룸 시설물을 함부로 다루지 마라. 음향 장비나 조명 컨트롤러를 막 만지면 고장 나기 쉽고, 수리비가 청구될 수 있다. 셋째, 정해진 시간을 지켜라. 연장을 원하면 미리 직원에게 말해야 한다. 시간이 초과된 후에 통보하면 추가 요금이 발생하는 건 물론이고, 다음 예약 손님에게 피해를 준다.
@@ -141,7 +145,7 @@ export default function Guide() {
           caption="일산의 밤은 준비한 사람에게 더 깊은 경험을 선사한다."
         />
 
-        <h2>퇴장과 결제 — 마지막까지 깔끔하게</h2>
+        <h2>일산룸 퇴장과 결제 — 마지막까지 깔끔하게</h2>
 
         <p>
           이용이 끝나면 룸 상태를 간단히 정리하고 나오는 게 좋다. 테이블 위를 대충이라도 정돈하고, 개인 소지품을 빠짐없이 챙겨라. 결제할 때는 영수증을 반드시 확인하라. 사전에 안내받지 못한 항목이 포함되어 있다면 현장에서 바로 확인하는 게 맞다. 나중에 전화로 항의하면 해결이 어렵다.

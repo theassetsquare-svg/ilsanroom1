@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const MAIN_SITE = 'https://nolcool.com'
+const MAIN_SITE = 'https://ilsanroom.pages.dev/'
 
 export default function ScrollCTA() {
   const [visible, setVisible] = useState(false)

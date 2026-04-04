@@ -13,20 +13,19 @@ import MiniQuiz from '../components/MiniQuiz.jsx'
 import ExitIntent from '../components/ExitIntent.jsx'
 import Gallery from '../components/Gallery.jsx'
 
-const MAIN_SITE = 'https://nolcool.com'
+const MAIN_SITE = 'https://ilsanroom.pages.dev/'
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'NightClub',
   name: '일산룸 — 예약 전에 반드시 읽어야 할 글',
   description: '일산룸 처음 방문 전 꼭 알아야 할 핵심 정보 총정리. 가격대, 위치별 특징, 예약 팁까지 현지 경험자가 직접 정리한 실전 가이드.',
-  author: { '@type': 'Person', name: '일산 밤문화 에디터' },
-  datePublished: '2026-03-15',
-  dateModified: '2026-04-04',
-  publisher: {
-    '@type': 'Organization',
-    name: '놀쿨',
-    url: MAIN_SITE
+  url: MAIN_SITE,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '고양시 일산',
+    addressRegion: '경기도',
+    addressCountry: 'KR'
   }
 }
 
@@ -104,7 +103,7 @@ export default function Home() {
 
         <Gallery />
 
-        <h2>처음 가는 사람이 실수하는 3가지</h2>
+        <h2>일산룸 처음 가는 사람이 실수하는 3가지</h2>
 
         <BeforeAfter
           before="예약 없이 금요일 밤 9시에 도착. 좋은 룸은 이미 다 찬 상태. 남는 자리에 앉아서 불만족."
@@ -153,7 +152,7 @@ export default function Home() {
           caption="6인 이�� 대형 룸은 ���드시 사전 예약이 필요하다."
         />
 
-        <h2>가격대는 어느 정도인가</h2>
+        <h2>일산룸 가격대는 어느 정도인가</h2>
 
         <div className="comparison-table">
           <table>

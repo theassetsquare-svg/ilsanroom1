@@ -13,16 +13,20 @@ import MiniQuiz from '../components/MiniQuiz.jsx'
 import ExitIntent from '../components/ExitIntent.jsx'
 import Gallery from '../components/Gallery.jsx'
 
-const MAIN_SITE = 'https://nolcool.com'
+const MAIN_SITE = 'https://ilsanroom.pages.dev/'
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'NightClub',
   name: '일산룸 지역별 솔직 후기 — 라페스타 웨스턴돔 장항동 비교',
   description: '일산룸 3대 상권 라페스타, 웨스턴돔, 장항동을 직접 다녀온 경험 기반 솔직 비교. 분위기, 서비스, 접근성 차이를 낱낱이 공개한다.',
-  author: { '@type': 'Person', name: '일산 밤문화 에디터' },
-  datePublished: '2026-03-25',
-  dateModified: '2026-04-04'
+  url: MAIN_SITE,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '고양시 일산',
+    addressRegion: '경기도',
+    addressCountry: 'KR'
+  }
 }
 
 export default function Review() {
@@ -53,7 +57,7 @@ export default function Review() {
           이 글 하나로 끝난다. 일산룸 세 곳을 같은 기준으로 비교해본 글은 검색해도 거의 없다. 광고비 받고 쓴 후기가 아니라, 직접 방문하고 돈 내고 이용한 사람의 기록이다.
         </p>
 
-        <h2>라페스타 — 접근성 최강, 가성비도 괜찮다</h2>
+        <h2>일산룸 라페스타 — 접근성 최강, 가성비도 괜찮다</h2>
 
         <LazyImage
           src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80&auto=format"
@@ -82,7 +86,7 @@ export default function Review() {
           <ReviewHighlight name="안** (30대)" rating={4} text="처음 가봤는데 음료 세팅이 기본 포함이라 추가 비용 없었다. 만족." date="2026.02" />
         </div>
 
-        <h2>웨스턴돔 — 한 단계 위의 경험을 원한다면</h2>
+        <h2>일산룸 웨스턴돔 — 한 단계 위의 경험을 원한다면</h2>
 
         <LazyImage
           src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=800&q=80&auto=format"
@@ -116,7 +120,7 @@ export default function Review() {
           <ReviewHighlight name="한** (30대)" rating={5} text="한 번 갔더니 다음에 전화했을 때 이름을 ��억하더라. 이게 프리미엄이다." date="2026.04" />
         </div>
 
-        <h2>장항동 — 숨은 고수들의 선택</h2>
+        <h2>일산룸 장항동 — 숨은 고수들의 선택</h2>
 
         <LazyImage
           src="https://images.unsplash.com/photo-1519690889869-e705e59f72e1?w=800&q=80&auto=format"
@@ -154,7 +158,7 @@ export default function Review() {
 
         <Gallery />
 
-        <h2>세 곳 요약 비교</h2>
+        <h2>일산룸 세 곳 요약 비교</h2>
 
         <div className="comparison-table">
           <table>
