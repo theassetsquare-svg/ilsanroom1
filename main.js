@@ -34,17 +34,16 @@ document.querySelectorAll('.secret').forEach(el=>{
   const results=document.getElementById('search-results');
   if(!input||!results)return;
   const pages=[
-    {url:'/',title:'일산룸 — 예약 전에 반드시 읽어야 할 글',kw:'일산룸 예약 가격 지역 라페스타 웨스턴돔 장항동'},
-    {url:'/guide',title:'일산룸 초보자 완벽 가이드',kw:'초보 가이드 복장 매너 예약 방법 처음'},
-    {url:'/review',title:'일산룸 지역별 솔직 후기',kw:'후기 리뷰 비교 라페스타 웨스턴돔 장항동'},
-    {url:'/price',title:'일산룸 가격 비교 총정리',kw:'가격 비용 세팅비 양주 연장 요금 가성비'}
+    {url:'/',title:'일산룸 — 예약 전에 반드시 읽어야 할 글',kw:'일산룸 예약 가격 지역 라페스타 웨스턴돔 장항동 일산 룸 밤문화'},
+    {url:'/guide',title:'일산룸 초보자 완벽 가이드',kw:'초보 가이드 복장 매너 예약 방법 처음 일산룸 이용법'},
+    {url:'/review',title:'일산룸 지역별 솔직 후기',kw:'후기 리뷰 비교 라페스타 웨스턴돔 장항동 일산룸 추천'}
   ];
   input.addEventListener('input',()=>{
     const q=input.value.trim();
     if(!q){results.classList.remove('open');results.innerHTML='';return;}
     const found=pages.filter(p=>p.title.includes(q)||p.kw.includes(q));
     if(found.length){
-      results.innerHTML=found.map(p=>'<li><a href="'+p.url+'" target="_blank" rel="noopener noreferrer">'+p.title+'</a></li>').join('');
+      results.innerHTML=found.map(p=>'<li><a href="'+p.url+'">'+p.title+'</a></li>').join('');
       results.classList.add('open');
     }else{
       results.innerHTML='<li style="padding:12px 16px;color:var(--text2);text-align:center">검색 결과가 없습니다</li>';
