@@ -1,0 +1,62 @@
+name: SEO Daily Cron
+
+on:
+  schedule:
+    # 12:00 KST = 03:00 UTC
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update sitemap lastmod to today (KST)
+        run: |
+          TODAY=$(TZ=Asia/Seoul date +%F)
+          echo "Today (KST): $TODAY"
+          sed -i -E "s|<lastmod>[0-9]{4}-[0-9]{2}-[0-9]{2}</lastmod>|<lastmod>$TODAY</lastmod>|g" sitemap.xml
+          echo "--- sitemap.xml ---"
+          cat sitemap.xml
+
+      - name: Update article:modified_time in HTML
+        run: |
+          TODAY=$(TZ=Asia/Seoul date +%FT09:00:00+09:00)
+          for f in index.html guide.html review.html; do
+            sed -i -E "s|<meta property=\"article:modified_time\" content=\"[^\"]+\">|<meta property=\"article:modified_time\" content=\"$TODAY\">|g" "$f"
+            sed -i -E "s|\"dateModified\":\"[^\"]+\"|\"dateModified\":\"$TODAY\"|g" "$f"
+          done
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "seo-bot"
+          git config user.email "seo-bot@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git add sitemap.xml index.html guide.html review.html
+          git commit -m "chore(seo): daily lastmod refresh $(TZ=Asia/Seoul date +%F)"
+          git push
+
+      - name: IndexNow ping (Bing, Yandex, Naver-via-Bing)
+        run: |
+          KEY="${{ secrets.INDEXNOW_KEY }}"
+          if [ -z "$KEY" ]; then
+            echo "INDEXNOW_KEY secret not set — skipping IndexNow ping"
+            exit 0
+          fi
+          curl -sS -X POST "https://api.indexnow.org/IndexNow" \
+            -H "Content-Type: application/json" \
+            -d "{\"host\":\"ilsanroom1.pages.dev\",\"key\":\"$KEY\",\"keyLocation\":\"https://ilsanroom1.pages.dev/$KEY.txt\",\"urlList\":[\"https://ilsanroom1.pages.dev/\",\"https://ilsanroom1.pages.dev/guide\",\"https://ilsanroom1.pages.dev/review\",\"https://ilsanroom1.pages.dev/legal\"]}" \
+            && echo "IndexNow ping done" || echo "IndexNow ping failed (non-fatal)"
+
+      - name: Google sitemap ping
+        run: |
+          curl -sS "https://www.google.com/ping?sitemap=https://ilsanroom1.pages.dev/sitemap.xml" && echo " — google pinged" || true

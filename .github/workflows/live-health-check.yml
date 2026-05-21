@@ -1,0 +1,63 @@
+name: Live Health Check
+
+on:
+  schedule:
+    # Every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check 4 pages + 6 SEO files (200 OK + content)
+        run: |
+          set +e
+          BASE="https://ilsanroom1.pages.dev"
+          declare -A CHECKS=(
+            ["/"]="일산룸"
+            ["/guide"]="초보자"
+            ["/review"]="라페스타"
+            ["/legal"]="운영 정책"
+            ["/sitemap.xml"]="urlset"
+            ["/robots.txt"]="Sitemap"
+            ["/llms.txt"]="일산룸"
+            ["/site.webmanifest"]="short_name"
+            ["/sw.js"]="caches"
+            ["/favicon.svg"]="svg"
+          )
+          FAIL=0
+          for path in "${!CHECKS[@]}"; do
+            url="$BASE$path"
+            expected="${CHECKS[$path]}"
+            code=$(curl -sLo /tmp/body -w "%{http_code}" -A "HealthCheckBot/1.0" "$url")
+            if [ "$code" != "200" ]; then
+              echo "::error::$path returned HTTP $code"
+              FAIL=$((FAIL+1))
+              continue
+            fi
+            if ! grep -q "$expected" /tmp/body; then
+              echo "::error::$path missing expected content: $expected"
+              FAIL=$((FAIL+1))
+              continue
+            fi
+            echo "OK $path (200 + content)"
+          done
+
+          echo "--- compliance scan on live HTML ---"
+          curl -sL "$BASE/" > /tmp/home.html
+          if grep -q "aggregateRating\|AggregateRating" /tmp/home.html; then
+            echo "::error::Live home has AggregateRating — violates project rules"
+            FAIL=$((FAIL+1))
+          fi
+          if grep -q '"reviewCount"\|"ratingValue"' /tmp/home.html; then
+            echo "::error::Live home has fake rating fields"
+            FAIL=$((FAIL+1))
+          fi
+
+          echo "--- summary ---"
+          if [ "$FAIL" -gt 0 ]; then
+            echo "::error::Live health check FAILED with $FAIL errors"
+            exit 1
+          fi
+          echo "All live checks PASSED"

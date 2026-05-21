@@ -1,8 +1,17 @@
+# 일산룸 가이드 — robots.txt
+# https://ilsanroom1.pages.dev/
+
 User-agent: *
 Allow: /
-Sitemap: https://ilsanroom1.pages.dev/sitemap.xml
 
+# Search engines
 User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
 Allow: /
 
 User-agent: Yeti
@@ -14,23 +23,59 @@ Allow: /
 User-agent: Daumoa
 Allow: /
 
+User-agent: Kakaotalk-scrap
+Allow: /
+
+# AI search & answer engines
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: Google-Extended
+User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: PerplexityBot
+User-agent: Google-Extended
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
 
-User-agent: Bingbot
+User-agent: Claude-Web
 Allow: /
 
-User-agent: Kakaotalk-scrap
+User-agent: anthropic-ai
 Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+Sitemap: https://ilsanroom1.pages.dev/sitemap.xml

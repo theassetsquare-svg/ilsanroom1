@@ -1,0 +1,98 @@
+name: Schema & Compliance Validate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'llms.txt'
+      - 'robots.txt'
+  pull_request:
+    paths:
+      - '**/*.html'
+  schedule:
+    # 13:00 KST = 04:00 UTC
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate JSON-LD blocks
+        run: |
+          set -e
+          node <<'EOF'
+          const fs = require('fs');
+          const files = ['index.html', 'guide.html', 'review.html', 'legal.html'];
+          let errs = 0;
+          for (const f of files) {
+            const html = fs.readFileSync(f, 'utf8');
+            const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+            if (blocks.length === 0) { console.error(`[${f}] no JSON-LD blocks`); errs++; continue; }
+            for (const [i, b] of blocks.entries()) {
+              try { JSON.parse(b[1]); console.log(`[${f}] block ${i+1}: OK`); }
+              catch (e) { console.error(`[${f}] block ${i+1} INVALID JSON: ${e.message}`); errs++; }
+            }
+          }
+          if (errs) process.exit(1);
+          EOF
+
+      - name: Compliance — block fake ratings
+        run: |
+          echo "Scanning for forbidden Schema patterns..."
+          if grep -rn 'aggregateRating\|AggregateRating\|"reviewCount"\|"ratingValue"' index.html guide.html review.html legal.html 2>/dev/null; then
+            echo "::error::Fake rating Schema detected. AggregateRating is FORBIDDEN by project rules."
+            exit 1
+          fi
+          echo "PASS — no fake rating Schema"
+
+      - name: Compliance — block forbidden words
+        run: |
+          echo "Scanning for forbidden words..."
+          FAIL=0
+          # 가격 (가격대 OK in some contexts, but we replaced everywhere)
+          if grep -n '유흥' index.html guide.html review.html legal.html 2>/dev/null; then
+            echo "::warning::'유흥' word found"
+            FAIL=1
+          fi
+          if grep -n '밤문화' index.html guide.html review.html legal.html 2>/dev/null; then
+            echo "::warning::'밤문화' word found"
+            FAIL=1
+          fi
+          if grep -n '2차' index.html guide.html review.html legal.html 2>/dev/null; then
+            echo "::warning::'2차' word found"
+            FAIL=1
+          fi
+          if grep -n '무료체험' index.html guide.html review.html legal.html 2>/dev/null; then
+            echo "::error::'무료체험' word found — FORBIDDEN"
+            exit 1
+          fi
+          if [ $FAIL -eq 1 ]; then echo "::warning::review forbidden-word findings above"; fi
+          echo "Forbidden-word scan complete"
+
+      - name: Validate sitemap.xml well-formed
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libxml2-utils
+          xmllint --noout sitemap.xml && echo "sitemap.xml OK"
+
+      - name: Check canonical/og:url consistency
+        run: |
+          for f in index.html guide.html review.html legal.html; do
+            CAN=$(grep -oP '<link rel="canonical" href="\K[^"]+' "$f" | head -1)
+            OGURL=$(grep -oP 'property="og:url" content="\K[^"]+' "$f" | head -1)
+            echo "[$f] canonical=$CAN og:url=$OGURL"
+            if [ "$CAN" != "$OGURL" ]; then
+              echo "::error::[$f] canonical and og:url mismatch"
+              exit 1
+            fi
+          done
+          echo "canonical/og:url consistency PASS"

@@ -1,0 +1,52 @@
+{
+  "name": "일산룸 가이드",
+  "short_name": "일산룸",
+  "description": "일산룸 예약 가이드 — 라페스타·웨스턴돔·장항동 권역별 정보",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#7c3aed",
+  "lang": "ko-KR",
+  "dir": "ltr",
+  "categories": ["lifestyle", "food", "business"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/og-home.png",
+      "sizes": "1200x1200",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "전화 예약",
+      "short_name": "전화",
+      "description": "신실장에게 바로 전화 — 010-3695-4929",
+      "url": "/?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "초보자 가이드",
+      "short_name": "가이드",
+      "description": "처음 가는 사람을 위한 완벽 정리",
+      "url": "/guide?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "권역별 후기",
+      "short_name": "후기",
+      "description": "라페스타·웨스턴돔·장항동 솔직 비교",
+      "url": "/review?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    }
+  ],
+  "prefer_related_applications": false
+}

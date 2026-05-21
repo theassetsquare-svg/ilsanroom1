@@ -1,0 +1,54 @@
+name: Lighthouse CI
+
+on:
+  schedule:
+    # 12:30 KST = 03:30 UTC
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Lighthouse CI
+        run: npm i -g @lhci/cli@0.13.x lighthouse@11.x
+
+      - name: Run Lighthouse on 4 live pages
+        run: |
+          set +e
+          mkdir -p .lighthouseci
+          for path in "/" "/guide" "/review" "/legal"; do
+            slug=$(echo "$path" | tr '/' '_' )
+            [ "$slug" = "_" ] && slug="_home"
+            lighthouse "https://ilsanroom1.pages.dev$path" \
+              --output=json --output=html \
+              --output-path=".lighthouseci/report$slug" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --quiet \
+              --only-categories=performance,accessibility,best-practices,seo \
+              || true
+          done
+          ls -la .lighthouseci || true
+
+      - name: Print scores summary
+        run: |
+          for f in .lighthouseci/*.json; do
+            [ -f "$f" ] || continue
+            echo "=== $(basename $f) ==="
+            node -e "const r=require('./$f');const c=r.categories;console.log('perf:',Math.round(c.performance.score*100),'a11y:',Math.round(c.accessibility.score*100),'bp:',Math.round(c['best-practices'].score*100),'seo:',Math.round(c.seo.score*100));"
+          done
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          retention-days: 14
