@@ -10,6 +10,7 @@
     <image:image>
       <image:loc>https://ilsanroom1.pages.dev/og-home.png</image:loc>
       <image:title>일산룸 — 예약 전에 반드시 읽어야 할 글</image:title>
+      <image:caption>일산룸 첫 방문 전 핵심 가이드</image:caption>
     </image:image>
   </url>
   <url>
@@ -20,6 +21,7 @@
     <image:image>
       <image:loc>https://ilsanroom1.pages.dev/og-guide.png</image:loc>
       <image:title>일산룸 초보자 가이드 — 처음 가는 사람을 위한 완벽 정리</image:title>
+      <image:caption>일산룸 첫 방문 체크리스트</image:caption>
     </image:image>
   </url>
   <url>
@@ -29,7 +31,8 @@
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://ilsanroom1.pages.dev/og-review.png</image:loc>
-      <image:title>일산룸 권역별 솔직 후기 — 라페스타 vs 웨스턴돔 vs 장항동</image:title>
+      <image:title>일산룸 권역별 솔직 후기 — 라페스타·웨스턴돔·장항동 직접 비교</image:title>
+      <image:caption>라페스타·웨스턴돔·장항동 권역 비교 후기</image:caption>
     </image:image>
   </url>
   <url>

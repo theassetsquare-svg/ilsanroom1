@@ -1,0 +1,74 @@
+name: SEO Hourly Watchdog
+
+on:
+  schedule:
+    # 24시간 매시 정각 실행 — 키워드 밀도, 타이틀 중복, description 길이 감시
+    - cron: '0 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - '.seo/audit.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run SEO precision audit
+        id: audit
+        run: |
+          echo "=== 일산룸 SEO Hourly Watchdog ==="
+          echo "Time (KST): $(TZ=Asia/Seoul date)"
+          python3 .seo/audit.py > /tmp/audit.json
+          EXIT=$?
+          cat /tmp/audit.json
+          echo ""
+          echo "=== Summary ==="
+          python3 -c "
+          import json
+          d = json.load(open('/tmp/audit.json'))
+          for p in d['pages']:
+              status = '✅' if p['density_ok'] and not p['title_dup_words'] and not p['desc_dup_words'] else '⚠️'
+              print(f\"{status} {p['file']}: 밀도 {p['density_pct']}% | 타이틀 {p['title_len']}자 | desc {p['desc_len']}자\")
+          print('')
+          if d['issues']:
+              print(f\"이슈 {len(d['issues'])}건:\")
+              for i in d['issues']:
+                  print('  -', i)
+          else:
+              print('이슈 0건 — 100% 통과')
+          "
+          exit $EXIT
+
+      - name: Live site verification
+        if: always()
+        run: |
+          set +e
+          BASE="https://ilsanroom1.pages.dev"
+          for path in "/" "/guide" "/review" "/legal"; do
+            code=$(curl -sL -o /dev/null -w "%{http_code}" -A "SEOAudit/1.0 (+ilsanroom)" "$BASE$path")
+            echo "  $path → HTTP $code"
+            [ "$code" != "200" ] && echo "::warning::$path returned HTTP $code"
+          done
+
+      - name: AI search engine bot reachability
+        if: always()
+        run: |
+          set +e
+          BASE="https://ilsanroom1.pages.dev"
+          echo "=== AI Search Engine Bot Simulation ==="
+          for ua in "GPTBot/1.0" "ChatGPT-User/1.0" "PerplexityBot/1.0" "ClaudeBot/1.0" "Google-Extended/1.0"; do
+            code=$(curl -sL -o /dev/null -w "%{http_code}" -A "$ua" "$BASE/")
+            echo "  $ua → HTTP $code"
+          done

@@ -28,10 +28,18 @@ jobs:
       - name: Update article:modified_time in HTML
         run: |
           TODAY=$(TZ=Asia/Seoul date +%FT09:00:00+09:00)
-          for f in index.html guide.html review.html; do
+          for f in index.html guide.html review.html legal.html; do
             sed -i -E "s|<meta property=\"article:modified_time\" content=\"[^\"]+\">|<meta property=\"article:modified_time\" content=\"$TODAY\">|g" "$f"
             sed -i -E "s|\"dateModified\":\"[^\"]+\"|\"dateModified\":\"$TODAY\"|g" "$f"
           done
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: SEO precision audit (must pass before commit)
+        run: python3 .seo/audit.py
 
       - name: Commit & push if changed
         run: |
@@ -41,8 +49,8 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git add sitemap.xml index.html guide.html review.html
-          git commit -m "chore(seo): daily lastmod refresh $(TZ=Asia/Seoul date +%F)"
+          git add sitemap.xml index.html guide.html review.html legal.html
+          git commit -m "chore(seo): daily lastmod + dateModified refresh $(TZ=Asia/Seoul date +%F)"
           git push
 
       - name: IndexNow ping (Bing, Yandex, Naver-via-Bing)
