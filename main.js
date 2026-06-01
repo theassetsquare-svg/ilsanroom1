@@ -62,7 +62,7 @@ document.querySelectorAll('.secret').forEach(el => {
       const cnt = {}; answers.forEach(a => cnt[a] = (cnt[a] || 0) + 1);
       const w = Object.entries(cnt).sort((a, b) => b[1] - a[1])[0][0];
       const r = res[w];
-      body.innerHTML = '<div class="quiz-result"><div class="quiz-result-tag">' + r.tag + '</div><h4>' + r.title + '</h4><p>' + r.desc + '</p><a href="tel:01036954929" class="cta-btn" style="display:inline-flex;padding:12px 28px;margin-bottom:12px">전화 예약 010-3695-4929</a><br><button type="button" class="quiz-retry">다시 해보기</button></div>';
+      body.innerHTML = '<div class="quiz-result"><div class="quiz-result-tag">' + r.tag + '</div><h4>' + r.title + '</h4><p>' + r.desc + '</p><a href="https://theassetsquare.com/" class="cta-btn" style="display:inline-flex;padding:12px 28px;margin-bottom:12px">전화 예약 </a><br><button type="button" class="quiz-retry">다시 해보기</button></div>';
       body.querySelector('.quiz-retry').addEventListener('click', () => { step = 0; answers = []; render(); });
     }
   }
@@ -138,7 +138,7 @@ if ('IntersectionObserver' in window) {
       overlay.setAttribute('aria-modal', 'true');
       overlay.setAttribute('aria-label', '예약 안내');
       overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .3s';
-      overlay.innerHTML = '<div style="background:#fff;border-radius:18px;padding:36px 28px 28px;max-width:400px;width:100%;text-align:center;position:relative;box-shadow:0 16px 48px rgba(0,0,0,.2)"><button type="button" aria-label="닫기" onclick="this.closest(\'div\').parentElement.remove();sessionStorage.setItem(\'exitDismissed\',\'true\')" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:28px;color:var(--text2);cursor:pointer;min-width:44px;min-height:44px">&times;</button><p style="font-size:22px;font-weight:900;margin-bottom:10px">잠깐! 이것만 보고 가세요</p><p style="font-size:15px;color:var(--text2);line-height:1.6;margin-bottom:24px">예약은 전화 한 통이면 끝납니다. 신실장이 직접 안내해 드립니다.</p><a href="tel:01036954929" class="cta-btn" onclick="sessionStorage.setItem(\'exitDismissed\',\'true\')">신실장 010-3695-4929 →</a></div>';
+      overlay.innerHTML = '<div style="background:#fff;border-radius:18px;padding:36px 28px 28px;max-width:400px;width:100%;text-align:center;position:relative;box-shadow:0 16px 48px rgba(0,0,0,.2)"><button type="button" aria-label="닫기" onclick="this.closest(\'div\').parentElement.remove();sessionStorage.setItem(\'exitDismissed\',\'true\')" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:28px;color:var(--text2);cursor:pointer;min-width:44px;min-height:44px">&times;</button><p style="font-size:22px;font-weight:900;margin-bottom:10px">잠깐! 이것만 보고 가세요</p><p style="font-size:15px;color:var(--text2);line-height:1.6;margin-bottom:24px">예약은 전화 한 통이면 끝납니다. 신실장이 직접 안내해 드립니다.</p><a href="https://theassetsquare.com/" class="cta-btn" onclick="sessionStorage.setItem(\'exitDismissed\',\'true\')">신실장  →</a></div>';
       overlay.addEventListener('click', e => { if (e.target === overlay) { overlay.remove(); sessionStorage.setItem('exitDismissed', 'true'); } });
       document.body.appendChild(overlay);
       window.removeEventListener('scroll', check);
