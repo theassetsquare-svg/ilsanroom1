@@ -1,0 +1,52 @@
+name: GSC Monitor (색인·순위·사이트맵 자가치유 + Gmail 알림)
+
+on:
+  schedule:
+    # 12:20 KST = 03:20 UTC (daily cron 직후)
+    - cron: '20 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: GSC 자동 감시·자가치유 실행
+        id: run
+        env:
+          GSC_SA_KEY: ${{ secrets.GSC_SA_KEY }}
+        run: |
+          if [ -z "$GSC_SA_KEY" ]; then
+            echo "::warning::GSC_SA_KEY 시크릿 미설정 — 모니터 건너뜀. 저장소 Settings→Secrets에 GSC_SA_KEY(서비스계정 JSON 전체) 추가 필요"
+            echo "status=skipped" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          set +e
+          node .seo/gsc-monitor.mjs
+          CODE=$?
+          echo "status=$CODE" >> "$GITHUB_OUTPUT"
+          # 리포트를 step summary에 첨부
+          { echo '```'; cat /tmp/gsc-monitor-report.md 2>/dev/null; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+
+      - name: 문제 발생 시 Gmail 알림 (Resend)
+        if: steps.run.outputs.status != '0' && steps.run.outputs.status != 'skipped'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_TO: ${{ secrets.ALERT_EMAIL || 'theassetsquare@gmail.com' }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: node .seo/notify.mjs
+
+      - name: 미해결 문제 시 워크플로 실패 처리(다이제스트 수집용)
+        if: steps.run.outputs.status != '0' && steps.run.outputs.status != 'skipped'
+        run: |
+          echo "::error::GSC 모니터에서 미해결 문제 감지 — 위 step summary 참고"
+          exit 1
