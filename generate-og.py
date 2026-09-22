@@ -4,16 +4,33 @@ sys.path.insert(0, '/nix/store/fb6lfadl6w4k7fmxds7lks2jzvg9swlr-python3.11-pillo
 
 from PIL import Image, ImageDraw, ImageFont
 
-FONT_PATH = "/tmp/NotoSansKR-Black.otf"
+
+# [2026-09-22] 폰트 경로 후보 탐색 — 원래 경로를 첫 후보로 그대로 두고,
+# 없으면 저장소 안 → Windows 시스템 폰트 순으로 찾는다. 리눅스 CI 동작은 그대로다.
+import os as _os
+def _pick_font(*cands):
+    for _p in cands:
+        if _p and _os.path.exists(_p):
+            return _p
+    raise OSError("한글 폰트를 못 찾았습니다: " + ", ".join(str(c) for c in cands if c))
+_HERE = _os.path.dirname(_os.path.abspath(__file__))
+_WIN = "C:/Windows/Fonts"
+FONT_PATH = _pick_font(
+    "/tmp/NotoSansKR-Black.otf",
+    _os.path.join(_HERE, "NotoSansKR-Black.otf"),
+    _os.path.join(_HERE, "NotoSansKR-Bold.ttf"),
+    _WIN + "/NotoSansKR-Bold.ttf",
+    _WIN + "/malgunbd.ttf",
+)
 WIDTH, HEIGHT = 1200, 1200
 BG_COLOR = "#1a1a2e"
 ACCENT = "#8B5CF6"
 BAR_HEIGHT = 80
 
 pages = [
-    {"main": "신실장", "sub": "일산룸", "file": "og-home.png"},
-    {"main": "신실장", "sub": "일산룸 초보자 가이드", "file": "og-guide.png"},
-    {"main": "신실장", "sub": "일산룸 지역별 후기", "file": "og-review.png"},
+    {"main": "일산룸 총책임자", "sub": "일산룸", "file": "og-home.png"},
+    {"main": "일산룸 총책임자", "sub": "일산룸 초보자 가이드", "file": "og-guide.png"},
+    {"main": "일산룸 총책임자", "sub": "일산룸 지역별 후기", "file": "og-review.png"},
 ]
 
 
@@ -43,7 +60,7 @@ def generate(page):
 
     target_width = int(WIDTH * 0.8)
 
-    # Main text — 신실장 (HUGE)
+    # Main text — 일산룸 총책임자 (HUGE)
     main_font, main_tw, main_th = find_max_font_size(
         draw, page["main"], FONT_PATH, target_width, max_size=500
     )
