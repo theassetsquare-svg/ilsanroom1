@@ -28,9 +28,9 @@ ACCENT = "#8B5CF6"
 BAR_HEIGHT = 80
 
 pages = [
-    {"main": "일산룸 총책임자", "sub": "일산룸", "file": "og-home.png"},
-    {"main": "일산룸 총책임자", "sub": "일산룸 초보자 가이드", "file": "og-guide.png"},
-    {"main": "일산룸 총책임자", "sub": "일산룸 지역별 후기", "file": "og-review.png"},
+    {"main": "광고문의", "sub": "일산룸", "file": "og-home.png"},
+    {"main": "광고문의", "sub": "일산룸 초보자 가이드", "file": "og-guide.png"},
+    {"main": "광고문의", "sub": "일산룸 지역별 후기", "file": "og-review.png"},
 ]
 
 
@@ -60,7 +60,7 @@ def generate(page):
 
     target_width = int(WIDTH * 0.8)
 
-    # Main text — 일산룸 총책임자 (HUGE)
+    # Main text (HUGE)
     main_font, main_tw, main_th = find_max_font_size(
         draw, page["main"], FONT_PATH, target_width, max_size=500
     )

@@ -19,7 +19,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/og-home.png",
+      "src": "/card-home-5bafd4b4.png",
       "sizes": "1200x1200",
       "type": "image/png",
       "purpose": "any"
@@ -27,9 +27,9 @@
   ],
   "shortcuts": [
     {
-      "name": "전화 예약",
-      "short_name": "전화",
-      "description": "신실장에게 바로 전화 — 010-3695-4929",
+      "name": "일산룸 가이드",
+      "short_name": "홈",
+      "description": "광고문의 카톡 besta12",
       "url": "/?utm_source=pwa_shortcut",
       "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
     },
