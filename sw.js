@@ -1,4 +1,4 @@
-const CACHE = 'ilsanroom-v2026-10-04';
+const CACHE = 'ilsanroom-v2026-10-06';
 const CORE = ['/', '/guide', '/review', '/legal', '/style.css', '/main.js', '/favicon.svg', '/site.webmanifest', '/offline.html'];
 
 self.addEventListener('install', e => {
